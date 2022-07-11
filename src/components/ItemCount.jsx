@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+const CounterDiv = styled.div`
+    display: flex;
+    justify-content: center;
+`
+
 const Input = styled.input`
     ::-webkit-outer-spin-button,
     ::-webkit-inner-spin-button {
@@ -21,11 +26,11 @@ const ItemCount = ({stock, initial, onAdd}) => {
     }
 
     return (
-        <>
+        <CounterDiv>
             <button onClick={clickHandler("-")}>-</button>
                 <Input type="number" value={iValue} readOnly />
             <button onClick={clickHandler("+")}>+</button>
-        </>
+        </CounterDiv>
     )
 }
 
