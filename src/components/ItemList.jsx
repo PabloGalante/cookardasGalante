@@ -2,11 +2,13 @@ import styled from 'styled-components';
 import Item from './Item';
 
 const ItemListDiv = styled.div`
-    width: 90%;
+    width: 80%;
     margin: 0 auto;
     padding: 15px;
     display: flex;
     justify-content: space-around;
+    max-width: 90%;
+    height: auto;
 `
 
 const ItemList = ({ items }) => {

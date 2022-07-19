@@ -5,14 +5,14 @@ import CartWidget from './CartWidget';
 const Nav = styled.nav`
 
     width: 100vw;
+    height: 95px;
     display: inline-flex;
     justify-content: space-between;
     position: sticky;
     top: 0;
     align-content: center;
     align-items: center;
-    background: rgba(208, 135, 0, 0.8);
-    background: linear-gradient(to top, white, rgba(208, 135, 0, 0.8) 10%);
+    background: linear-gradient(to top, rgba(208, 135, 0, 0.2), rgba(208, 135, 0, 0.8) 20%);
 
     .logo-navbar {
         height: 70px;
