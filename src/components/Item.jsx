@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import ItemCount from './ItemCount';
-import ItemDetailContainer from './ItemDetailContainer';
 
 const ItemDiv = styled.div`
     width: 250px;
@@ -9,11 +9,12 @@ const ItemDiv = styled.div`
     border: 1px solid white;
     border-radius: 10px;
     background: #ffe9d1;
+    padding: 1.5rem;
 
     .articleImage {
-        width: 60px;
-        height: 60px;
-        margin: 20px auto;
+        width: 90px;
+        height: 90px;
+        margin: 0 auto;
         display: block;
         border-radius: 50%;
     }
@@ -21,6 +22,7 @@ const ItemDiv = styled.div`
     .articleImage + p {
         font-weight: bold;
         font-size: 1.2rem;
+        padding-top: 10px;
     }
 
     .articleP {
@@ -58,12 +60,10 @@ const Button = styled.button`
     touch-action: manipulation;
     width: auto;
     will-change: transform,opacity;
-    margin: 45px auto;
+    margin: 2rem auto;
 `
 
 const Item = ({ item }) => {
-
-    const [isOpen, setIsOpen] = useState(false);
 
     return (
         <>
@@ -71,11 +71,13 @@ const Item = ({ item }) => {
                 <img src={item.pictureUrl} alt={item.title} className="articleImage" />
                 <p className="articleP">{item.title}</p>
 
-                <Button onClick={() => setIsOpen(true)}>Ver descripción</Button>
+                <Link to={`item/${item.id}`} style={{textDecoration : 'none'}}>
+                    <Button>Ver descripción</Button>
+                </Link>
+
+                <p className="articleP">Stock: {item.stock}</p>
 
                 <ItemCount stock={item.stock} initial={1} onAdd/>
-
-                {isOpen && <ItemDetailContainer item={item} setIsOpen={setIsOpen} />}
             </ItemDiv>
         </>
     )

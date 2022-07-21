@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import logo from '../assets/img/LOGO-REDONDO-HONDO.png';
 import CartWidget from './CartWidget';
+import { Link } from 'react-router-dom';
 
 const Nav = styled.nav`
 
@@ -48,15 +49,19 @@ const Nav = styled.nav`
 const NavBar = () => {
     return (
         <Nav>
-            <img src={logo} alt="Logo Cookardas" className='logo-navbar'></img>
+            <Link to={'/'}>
+                <img src={logo} alt="Logo Cookardas" className='logo-navbar'></img>
+            </Link>
 
             <ul className='ul-navbar'>
-                <li className='li-navbar'><a href="#">Productos</a></li>
-                <li className='li-navbar'><a href="#">Ofertas</a></li>
-                <li className='li-navbar'><a href="#">Contacto</a></li>
+                <li className='li-navbar'><Link to={'/productos'}>Productos</Link></li>
+                <li className='li-navbar'><Link to={'/ofertas'}>Ofertas</Link></li>
+                <li className='li-navbar'><Link to={'/contacto'}>Contacto</Link></li>
             </ul>
 
-            <CartWidget />
+            <Link to={'/cart'} className='li-navbar'>
+                <CartWidget />
+            </Link>
         </Nav>
     )
 };

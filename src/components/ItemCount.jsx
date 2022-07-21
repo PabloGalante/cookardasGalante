@@ -4,6 +4,7 @@ import styled from 'styled-components';
 const CounterDiv = styled.div`
     display: flex;
     justify-content: center;
+    margin: 0.5rem;
 `
 
 const Input = styled.input`
@@ -90,22 +91,29 @@ const Button = styled.button`
 `
 
 
-const ItemCount = ({stock, initial, onAdd}) => {
+const ItemCount = ({stock, initial, onAdd, id}) => {
 
     const [iValue, setiValue] = useState(initial);
 
+    const updateCountInput = (e) => {
+        const { value } = e.target;
+        if (value <= stock) {
+          setiValue(isNaN(value) ? 0 : parseInt(value));
+        }
+    };
+
     function clickHandler(event){
         if( event === "-" && iValue > 0){
-            return () => setiValue( iValue - 1)
+            return () => setiValue(iValue - 1)
         }else if( event === "+" && iValue < stock){
-            return () => setiValue( iValue + 1)
+            return () => setiValue(iValue + 1)
         }
     }
 
     return (
         <CounterDiv>
             <Button onClick={clickHandler("-")} role="button">-</Button>
-                <Input type="number" value={iValue} readOnly />
+                <Input type="number" value={iValue} onInput={(e) => updateCountInput(e)} id={`count${id}`} />
             <Button onClick={clickHandler("+")} role="button">+</Button>
         </CounterDiv>
     )

@@ -1,93 +1,61 @@
 import styled from 'styled-components';
+import React, { useState, useEffect } from 'react';
+import ItemCount from './ItemCount';
 
-const ModalDiv = styled.div`
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    transition: 200ms ease-in-out;
-    border: 1px solid black;
-    border-radius: 10px;
-    z-index: 10;
-    background-color: white;
-    width: 450px;
-    max-width: 80%;
-`
-
-const ModalHeader = styled.div`
-    padding: 10px 15px;
+const ItemDiv = styled.div`
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    margin: 1rem auto;
+    padding: 1rem;
+    max-width: 50%;
     height: auto;
-    background: white;
-    overflow: hidden;
-    border-top-left-radius: 16px;
-    border-top-right-radius: 16px;
+    border: 1px solid white;
+    border-radius: 10px;
+    background: #ffe9d1;
 `
 
-const ModalBody = styled.div`
-    padding: 10px 15px;
-    font-size: 1.15rem;
-    color: #2c3e50;
-    text-align: center;
-    margin-bottom: 1rem;
+const ItemDetailImg = styled.img`
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
 `
 
-const CloseButton = styled.button`
-    cursor: pointer;
-    border: none;
-    outline: none;
-    background: none;
-    font-size: 1.25rem;
+const ItemDetailTitle = styled.h2`
+    font-size: 2rem;
     font-weight: bold;
+    margin: 0.5rem;
+    letter-spacing: 0.2rem;
 `
 
-const ModalTitle = styled.div`
-    font-size: 1.25rem;
-    font-weight: bold;
-    margin: 0;
-    padding: 10px;
-    color: #2c3e50;
-    text-align: center;
-
-    .articleImage {
-        width: 30px;
-        height: 30px;
-        margin: auto;
-        display: inline-flex;
-        border-radius: 50%;
-    }
+const ItemDetailText = styled.p`
+    margin: 0.4rem;
+    font-size: 1.2rem;
 `
 
-const Overlay = styled.div`
-    background-color: rgba(0, 0, 0, 0.2);
-    width: 100vw;
-    height: 100vh;
-    z-index: 2;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    position: absolute;
-`
+const ItemDetail = ({ item }) => {
+    const [amount, setAmount] = useState(0);
+    const [remainingStock, setRemainingStock] = useState(item.stock);
 
-const ItemDetail = ({ item, setIsOpen }) => {
+    const onAdd = (amount) => {
+        setAmount(amount);
+    };
 
     return (
         <>
-            <Overlay onClick={() => setIsOpen(false)}></Overlay>
-            <ModalDiv>
-                <ModalHeader>
-                    <ModalTitle>{item.title}</ModalTitle>
-                    <img src={item.pictureUrl} alt={item.title} className="articleImage" />
-                    <CloseButton onClick={() => setIsOpen(false)}>&times;</CloseButton>
-                </ModalHeader>
-                <ModalBody>
-                    <p>{item.description}</p>
-                    <br/>
-                    <p>$: {item.price}</p>
-                </ModalBody>
-            </ModalDiv>
+            <ItemDiv>
+                <ItemDetailImg src={item.pictureUrl} alt={item.title} />
+                <ItemDetailTitle>{item.title}</ItemDetailTitle>
+
+                <ItemDetailText>{item.description}</ItemDetailText>
+                <ItemDetailText>Quedan {remainingStock} cookies!</ItemDetailText>
+                <ItemDetailText>$: {item.price}</ItemDetailText>
+
+                <ItemCount stock={item.stock} initial={0} onAdd={onAdd} id={item.id} />
+
+                <ItemDetailText>Carrito: {amount}</ItemDetailText>
+            </ItemDiv>
         </>
     )
 }

@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import dataList from '../data/itemListData.json';
 import Loading from './Loading';
 import ItemDetail from './ItemDetail';
 
-const ItemDetailContainer = ({item, setIsOpen}) => {
+const ItemDetailContainer = ({item}) => {
     const [fetchedItem, setFetchedItem] = useState({});
     const [isLoading, setIsLoading] = useState(false);
 
+    const param = useParams();
 
     const promise = new Promise((resolve) => {
-        setTimeout(() => resolve(true), 2000);
+        setTimeout(() => resolve(dataList), 2000);
     });
 
     useEffect(() => {
@@ -16,19 +19,21 @@ const ItemDetailContainer = ({item, setIsOpen}) => {
 
         promise
             .then((res) => {
-                res && setFetchedItem(item);
+                const items = res.filter((item) => item.id == param.id);
+                setFetchedItem(items[0]);
             })
             .catch((err) => {
                 console.log(err)
             })
             .finally(() => {
-                setIsLoading(false)
+                setIsLoading(false);
             })
     }, [])
 
     if (isLoading) return <Loading/>;
+    
     return (
-        <ItemDetail item={fetchedItem} setIsOpen={setIsOpen} />
+        <ItemDetail item={fetchedItem} />
     )
 }
 
