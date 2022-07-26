@@ -1,11 +1,9 @@
-
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import ItemCount from './ItemCount';
 
 const ItemDiv = styled.div`
     width: 250px;
-    height: 300px;
+    height: auto;
     border: 1px solid white;
     border-radius: 10px;
     background: #ffe9d1;
@@ -75,9 +73,6 @@ const Item = ({ item }) => {
                     <Button>Ver descripción</Button>
                 </Link>
 
-                <p className="articleP">Stock: {item.stock}</p>
-
-                <ItemCount stock={item.stock} initial={1} onAdd/>
             </ItemDiv>
         </>
     )

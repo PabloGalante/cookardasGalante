@@ -32,6 +32,9 @@ const Nav = styled.nav`
         display: inline-flex;
         margin-right: 10px;
         padding: 1.5rem;
+        text-decoration: none;
+        color: inherit;
+        margin: 10px;
     }
 
     .li-navbar a, :hover, :visited {
@@ -46,11 +49,11 @@ const Nav = styled.nav`
     }
 `;
 
-const NavBar = () => {
+const NavBar = ({totalItems}) => {
     return (
         <Nav>
             <Link to={'/'}>
-                <img src={logo} alt="Logo Cookardas" className='logo-navbar'></img>
+                <img src={logo} alt="Logo Cookardas" className='logo-navbar' />
             </Link>
 
             <ul className='ul-navbar'>
@@ -60,7 +63,7 @@ const NavBar = () => {
             </ul>
 
             <Link to={'/cart'} className='li-navbar'>
-                <CartWidget />
+                <CartWidget totalItems={totalItems} />
             </Link>
         </Nav>
     )

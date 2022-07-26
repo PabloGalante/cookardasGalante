@@ -2,17 +2,12 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBasketShopping } from '@fortawesome/free-solid-svg-icons';
 
-const BagLink = styled.a`
-    text-decoration: none;
-    color: inherit;
-    margin: 10px;
-`
-
-const CartWidget = () => {
+const CartWidget = ({totalItems}) => {
     return (
-        <BagLink href="">
+        <>
             <FontAwesomeIcon icon={faBasketShopping} size="2x" />
-        </BagLink>
+            <span style={{margin: '5px', alignSelf: 'center', fontWeight: 'bold'}}>{totalItems}</span>
+        </>
     )
 }
 

@@ -4,7 +4,7 @@ import dataList from '../data/itemListData.json';
 import Loading from './Loading';
 import ItemDetail from './ItemDetail';
 
-const ItemDetailContainer = ({item}) => {
+const ItemDetailContainer = ({totalItems}) => {
     const [fetchedItem, setFetchedItem] = useState({});
     const [isLoading, setIsLoading] = useState(false);
 
@@ -33,7 +33,7 @@ const ItemDetailContainer = ({item}) => {
     if (isLoading) return <Loading/>;
     
     return (
-        <ItemDetail item={fetchedItem} />
+        <ItemDetail item={fetchedItem} totalItems={totalItems} fetched={{fetchedItem: fetchedItem, setFetchedItem: setFetchedItem}} />
     )
 }
 

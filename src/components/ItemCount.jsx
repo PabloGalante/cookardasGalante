@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const CounterDiv = styled.div`
@@ -41,7 +42,6 @@ const Button = styled.button`
     justify-content: center;
     letter-spacing: .25px;
     line-height: normal;
-    max-width: 2rem;
     overflow: visible;
     padding: 2px 1rem;
     text-align: center;
@@ -111,11 +111,14 @@ const ItemCount = ({stock, initial, onAdd, id}) => {
     }
 
     return (
-        <CounterDiv>
-            <Button onClick={clickHandler("-")} role="button">-</Button>
-                <Input type="number" value={iValue} onInput={(e) => updateCountInput(e)} id={`count${id}`} />
-            <Button onClick={clickHandler("+")} role="button">+</Button>
-        </CounterDiv>
+        <>
+            <CounterDiv>
+                <Button onClick={clickHandler("-")} role="button">-</Button>
+                    <Input type="number" value={iValue} onChange={(e) => updateCountInput(e)} id={`count${id}`} />
+                <Button onClick={clickHandler("+")} role="button">+</Button> 
+            </CounterDiv>
+            <Button onClick={() => {onAdd(iValue)}} role="button" style={{width: 'auto', height: 'auto'}}>Agregar al carrito</Button>
+        </>
     )
 }
 
