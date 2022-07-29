@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import ItemCount from './ItemCount';
-import dataList from '../data/itemListData.json';
+import { CartContext } from '../context/CartContext';
 
 const ItemDiv = styled.div`
     display: flex;
@@ -119,17 +119,16 @@ const Button = styled.button`
     }
 `
 
-const ItemDetail = ({ item, totalItems, fetched }) => {
+const ItemDetail = ({ item, fetched }) => {
     const [amount, setAmount] = useState(0);
     const [itemStock, setItemStock] = useState(fetched.fetchedItem.stock);
+    const { setCartItems } = useContext(CartContext);
 
     function onAdd(value){
-
         if(itemStock >= value){
             setAmount(amount + value);
-            totalItems.setTotalItems(state => state + value);
             setItemStock(itemStock - value);
-
+            setCartItems((prevState) => [...prevState, item]);
         }else{
             alert('No hay suficiente stock');
         }
