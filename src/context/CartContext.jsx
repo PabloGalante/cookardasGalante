@@ -6,41 +6,47 @@ const CartProvider = ( props ) => {
 
     const [cartItems, setCartItems] = React.useState([]);
 
+    console.log(cartItems);
+
     const addItem = (item, quantity) => {
-        const newItem = {...item, quantity: quantity};
-        
-        for(const obj in cartItems){
-            if(obj.id == item.id){
-                setCartItems((prevState) => [...prevState, newItem]);
-            }else{
-                alert('No se puede agregar duplicado')
-            }
+        if(isInCart(item.id)) {
+            setCartItems(cartItems.map(product => {
+                return product.id === item.id ? {...product, quantity: product.quantity + quantity} : product
+            }));
+        } else {
+            setCartItems([...cartItems, {...item, quantity}])
         }
     }
 
-    const removeItem = (itemId) => {
-        const array = cartItems;
+    const removeItem = (id) => setCartItems(cartItems.filter(item => item.id !== id ));
 
-        array.filter((item) => item.id != itemId );
+    const clear = () => setCartItems([]);
 
-        return setCartItems(array);
+    const isInCart = (id) => cartItems.find(item => item.id === id) ? true : false;
+
+    const totalPrice = () => {
+        return cartItems.reduce((previous, current) => {
+            return previous + current.quantity * current.price
+        }, 0)
     };
 
-    const clear = () => {
-        setCartItems([]);
-    }
-
-    const isInCart = (id) => {
-        const index = cartItems.findIndex((item) => item.id == id); 
-        if(index == -1){
-            return false
-        }else {
-            return true;
-        }
-    }
+    const totalItems = () => {
+        return cartItems.reduce((previous, current) => {
+            return previous + current.quantity;
+        }, 0)
+    };
 
     return (
-        <CartContext.Provider value={{ cartItems, setCartItems, addItem, removeItem, clear, isInCart }}>
+        <CartContext.Provider value={{ 
+                                        cartItems, 
+                                        setCartItems,
+                                        addItem,
+                                        removeItem,
+                                        clear,
+                                        isInCart,
+                                        totalItems,
+                                        totalPrice
+                                    }}>
             { props.children }
         </CartContext.Provider>
     )

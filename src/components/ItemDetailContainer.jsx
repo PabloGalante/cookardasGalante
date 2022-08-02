@@ -29,11 +29,9 @@ const ItemDetailContainer = () => {
                 setIsLoading(false);
             })
     }, [])
-
-    if (isLoading) return <Loading/>;
     
     return (
-        <ItemDetail item={fetchedItem} fetched={{fetchedItem: fetchedItem, setFetchedItem: setFetchedItem}} />
+        isLoading ? <Loading/> : <ItemDetail item={fetchedItem} fetched={{fetchedItem: fetchedItem, setFetchedItem: setFetchedItem}} />
     )
 }
 

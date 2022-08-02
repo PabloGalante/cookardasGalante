@@ -10,7 +10,7 @@ const ItemListContainer = (props) => {
     const { id } = useParams();
 
     const promise = new Promise((resolve) => {
-        setTimeout(() => resolve(dataList), 2000)
+        setTimeout(() => resolve(dataList), 2000);
     });
 
     useEffect(() => {

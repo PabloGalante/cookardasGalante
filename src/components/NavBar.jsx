@@ -1,7 +1,9 @@
+import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import logo from '../assets/img/LOGO-REDONDO-HONDO.png';
 import CartWidget from './CartWidget';
 import { Link } from 'react-router-dom';
+import { CartContext } from '../context/CartContext';
 
 const Nav = styled.nav`
 
@@ -49,7 +51,19 @@ const Nav = styled.nav`
     }
 `;
 
-const NavBar = ({totalItems}) => {
+const NavBar = () => {
+    const { cartItems } = useContext(CartContext);
+
+    useEffect(() => {
+        const link = document.getElementById("cart-widget");
+
+        if(cartItems.length === 0){
+            link.style.display = 'none';
+        }else {
+            link.style.display = 'inline-flex';
+        }
+    }, [cartItems]);
+
     return (
         <Nav>
             <Link to={'/'}>
@@ -61,9 +75,9 @@ const NavBar = ({totalItems}) => {
                 <li className='li-navbar'><Link to={'/ofertas'}>Ofertas</Link></li>
                 <li className='li-navbar'><Link to={'/contacto'}>Contacto</Link></li>
             </ul>
-
-            <Link to={'/cart'} className='li-navbar'>
-                <CartWidget totalItems={totalItems} />
+            
+            <Link to={'/cart'} className='li-navbar' id="cart-widget">
+                <CartWidget />
             </Link>
         </Nav>
     )

@@ -4,11 +4,11 @@ import { faBasketShopping } from '@fortawesome/free-solid-svg-icons';
 import { CartContext } from '../context/CartContext';
 
 const CartWidget = () => {
-    const { cartItems } = useContext(CartContext);
+    const { totalItems } = useContext(CartContext);
     return (
         <>
             <FontAwesomeIcon icon={faBasketShopping} size="2x" />
-            <span style={{margin: '5px', alignSelf: 'center', fontWeight: 'bold'}}>{cartItems.length}</span>
+            {totalItems !== 0 && <span style={{margin: '5px', alignSelf: 'center', fontWeight: 'bold'}}>{totalItems()}</span>}
         </>
     )
 }

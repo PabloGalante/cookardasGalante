@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import ItemCount from './ItemCount';
@@ -21,6 +21,70 @@ const ItemDiv = styled.div`
         padding: 1.5rem;
         text-decoration: none;
         color: inherit;
+
+        align-items: center;
+        appearance: none;
+        background-color: #fff;
+        border-radius: 1.5rem;
+        border-style: none;
+        box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,rgba(0, 0, 0, .14) 0 6px 10px 0,rgba(0, 0, 0, .12) 0 1px 18px 0;
+        box-sizing: border-box;
+        color: #3c4043;
+        cursor: pointer;
+        display: flex;
+        fill: currentcolor;
+        font-size: 1rem;
+        font-weight: 500;
+        height: 2rem;
+        justify-content: center;
+        letter-spacing: .25px;
+        line-height: normal;
+        overflow: visible;
+        padding: 2px 1rem;
+        text-align: center;
+        text-transform: none;
+        transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1),opacity 15ms linear 30ms,transform 270ms cubic-bezier(0, 0, .2, 1) 0ms;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        width: auto;
+        will-change: transform,opacity;
+        margin: 5px;
+    
+        :hover {
+            background: #F6F9FE;
+            color: #174ea6;
+        }
+    
+        :active {
+            box-shadow: 0 4px 4px 0 rgb(60 64 67 / 30%), 0 8px 12px 6px rgb(60 64 67 / 15%);
+            outline: none;
+        }
+    
+        :focus {
+            outline: none;
+            border: 2px solid #4285f4;
+        }
+    
+        :not(:disabled) {
+            box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+        }
+    
+        :not(:disabled):hover {
+            box-shadow: rgba(60, 64, 67, .3) 0 2px 3px 0, rgba(60, 64, 67, .15) 0 6px 10px 4px;
+        }
+    
+        :not(:disabled):focus {
+            box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+        }
+    
+        :not(:disabled):active {
+            box-shadow: rgba(60, 64, 67, .3) 0 4px 4px 0, rgba(60, 64, 67, .15) 0 8px 12px 6px;
+        }
+    
+        :disabled {
+            box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+        }
     }
 
     .checkout a, :hover, :visited {
@@ -53,82 +117,22 @@ const ItemDetailText = styled.p`
     font-size: 1.2rem;
 `
 
-const Button = styled.button`
-    align-items: center;
-    appearance: none;
-    background-color: #fff;
-    border-radius: 1.5rem;
-    border-style: none;
-    box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,rgba(0, 0, 0, .14) 0 6px 10px 0,rgba(0, 0, 0, .12) 0 1px 18px 0;
-    box-sizing: border-box;
-    color: #3c4043;
-    cursor: pointer;
-    display: flex;
-    fill: currentcolor;
-    font-size: 1rem;
-    font-weight: 500;
-    height: 2rem;
-    justify-content: center;
-    letter-spacing: .25px;
-    line-height: normal;
-    overflow: visible;
-    padding: 2px 1rem;
-    text-align: center;
-    text-transform: none;
-    transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1),opacity 15ms linear 30ms,transform 270ms cubic-bezier(0, 0, .2, 1) 0ms;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    width: auto;
-    will-change: transform,opacity;
-    margin: 5px;
-
-    :hover {
-        background: #F6F9FE;
-        color: #174ea6;
-    }
-
-    :active {
-        box-shadow: 0 4px 4px 0 rgb(60 64 67 / 30%), 0 8px 12px 6px rgb(60 64 67 / 15%);
-        outline: none;
-    }
-
-    :focus {
-        outline: none;
-        border: 2px solid #4285f4;
-    }
-
-    :not(:disabled) {
-        box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
-    }
-
-    :not(:disabled):hover {
-        box-shadow: rgba(60, 64, 67, .3) 0 2px 3px 0, rgba(60, 64, 67, .15) 0 6px 10px 4px;
-    }
-
-    :not(:disabled):focus {
-        box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
-    }
-
-    :not(:disabled):active {
-        box-shadow: rgba(60, 64, 67, .3) 0 4px 4px 0, rgba(60, 64, 67, .15) 0 8px 12px 6px;
-    }
-
-    :disabled {
-        box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
-    }
-`
-
-const ItemDetail = ({ item, fetched }) => {
+const ItemDetail = ({ item }) => {
     const [amount, setAmount] = useState(0);
-    const [itemStock, setItemStock] = useState(fetched.fetchedItem.stock);
-    const { setCartItems } = useContext(CartContext);
+    const [itemStock, setItemStock] = useState(item.stock);
+    const { addItem, cartItems } = useContext(CartContext);
+
+    const findItem = cartItems.find(product => product.id === item.id);
+
+    useEffect(() => {
+        findItem === undefined ? setAmount(0) : setAmount(findItem.quantity);
+    }, [findItem])
 
     function onAdd(value){
         if(itemStock >= value){
-            setAmount(amount + value);
-            setItemStock(itemStock - value);
-            setCartItems((prevState) => [...prevState, item]);
+            setItemStock( itemStock - value );
+            addItem( item , value );
+            setAmount((prevState) => prevState + value);
         }else{
             alert('No hay suficiente stock');
         }
@@ -148,9 +152,7 @@ const ItemDetail = ({ item, fetched }) => {
 
                 <ItemDetailText>Carrito: {amount}</ItemDetailText>
                 
-                <Button>
-                    <Link to={'/cart'} className='checkout'>Ir al checkout</Link>
-                </Button>
+                {amount !== 0 && <Link to={'/cart'} className='checkout'>Ir al checkout</Link>}
                 
             </ItemDiv>
         </>
