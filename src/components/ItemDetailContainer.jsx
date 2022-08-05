@@ -1,34 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import dataList from '../data/itemListData.json';
 import Loading from './Loading';
 import ItemDetail from './ItemDetail';
+import {doc, getDoc, getFirestore} from 'firebase/firestore';
 
 const ItemDetailContainer = () => {
     const [fetchedItem, setFetchedItem] = useState({});
     const [isLoading, setIsLoading] = useState(false);
 
-    const param = useParams();
-
-    const promise = new Promise((resolve) => {
-        setTimeout(() => resolve(dataList), 2000);
-    });
+    let param = useParams();
 
     useEffect(() => {
         setIsLoading(true);
 
-        promise
-            .then((res) => {
-                const items = res.filter((item) => item.id == param.id);
-                setFetchedItem(items[0]);
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-            .finally(() => {
-                setIsLoading(false);
-            })
-    }, [])
+        const db = getFirestore();
+
+        const docRef = doc(db, "cookies", param.id);
+
+        getDoc(docRef)
+            .then((snapshot) => setFetchedItem({id: snapshot.id, ...snapshot.data()}))
+            .finally(() => setIsLoading(false));
+
+    }, [param.id])
     
     return (
         isLoading ? <Loading/> : <ItemDetail item={fetchedItem} fetched={{fetchedItem: fetchedItem, setFetchedItem: setFetchedItem}} />

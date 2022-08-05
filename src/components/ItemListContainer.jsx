@@ -1,36 +1,39 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import dataList from '../data/itemListData.json';
 import ItemList from './ItemList';
 import Loading from './Loading';
+import {collection, getDocs, getFirestore, query, where} from 'firebase/firestore';
 const ItemListContainer = (props) => {
     const [items, setItems] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
-    const { id } = useParams();
-
-    const promise = new Promise((resolve) => {
-        setTimeout(() => resolve(dataList), 2000);
-    });
+    let { category } = useParams();
 
     useEffect(() => {
         setIsLoading(true);
 
-        promise
-        .then((res) => {
-            if(id){
-                setItems(res.filter((product) => product.category == id))
-            }else {
-                setItems(res)
-            }
-        })
-        .catch((err) => {
-            setItems([])
-        })
-        .finally(() => {
-            setIsLoading(false)
-        })
-    }, [id]);
+        const db = getFirestore();
+
+        const items = collection(db, "cookies");
+
+        if(!category){
+            getDocs(items)
+            .then((snapshot) => {
+                const data = snapshot.docs.map((doc) => ({id: doc.id, ...doc.data()}));
+                setItems(data);
+            })
+            .finally(() => setIsLoading(false));
+        }else {
+            const filteredItems = query(items, where("categoryId", "==", category));
+
+            getDocs(filteredItems)
+            .then((snapshot) => {
+                const data = snapshot.docs.map((doc) => ({id: doc.id, ...doc.data()}));
+                setItems(data);
+            })
+            .finally(() => setIsLoading(false));
+        }
+    }, [category]);
 
     if (isLoading) return <Loading/>;
 
