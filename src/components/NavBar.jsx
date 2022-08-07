@@ -73,7 +73,7 @@ const NavBar = () => {
             <ul className='ul-navbar'>
                 <li className='li-navbar'><Link to={'/clasicas'}>Clásicas</Link></li>
                 <li className='li-navbar'><Link to={'/veganas'}>Veganas</Link></li>
-                <li className='li-navbar'><Link to={'/contacto'}>Contacto</Link></li>
+                <li className='li-navbar'><Link to={'/contact'}>Contacto</Link></li>
             </ul>
             
             <Link to={'/cart'} className='li-navbar' id="cart-widget">

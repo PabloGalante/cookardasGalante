@@ -1,12 +1,11 @@
 import React from 'react';
+import { addDoc, collection, getFirestore, updateDoc, doc } from 'firebase/firestore';
 
 export const CartContext = React.createContext();
 
 const CartProvider = ( props ) => {
 
     const [cartItems, setCartItems] = React.useState([]);
-
-    console.log(cartItems);
 
     const addItem = (item, quantity) => {
         if(isInCart(item.id)) {
@@ -36,6 +35,40 @@ const CartProvider = ( props ) => {
         }, 0)
     };
 
+    const sendOrder = (total, buyerData) => {
+        const timestamp = Date.now(); 
+        const fecha = new Date(timestamp);
+
+        const db = getFirestore();
+        const orderCollection = collection(db, "orders");
+        const order = {
+            buyerData,
+            items: cartItems,
+            fecha,
+            total
+        };
+
+        addDoc(orderCollection, order)
+            .then((res) => alert(`Su compra fue realizada con exito. Su numero de orden es ${res.id}`))
+            .catch((err) => console.log(err));
+        
+        updateStock(order);
+        clear();
+    };
+
+    const updateStock = (order) => {
+        const db = getFirestore();
+
+        order.items.forEach((item) => {
+            const orderQuantity = item.quantity;
+            console.log(orderQuantity);
+            const itemStock = parseInt(item.stock);
+            console.log(itemStock);
+            const docRef = doc(db, "cookies", item.id);
+            updateDoc(docRef, {stock: itemStock - orderQuantity});
+        });
+    }
+
     return (
         <CartContext.Provider value={{ 
                                         cartItems, 
@@ -45,7 +78,8 @@ const CartProvider = ( props ) => {
                                         clear,
                                         isInCart,
                                         totalItems,
-                                        totalPrice
+                                        totalPrice,
+                                        sendOrder
                                     }}>
             { props.children }
         </CartContext.Provider>

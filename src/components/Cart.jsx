@@ -240,7 +240,7 @@ const Cart = () => {
                 </ul>
                 <h3>{`Su total es de: $${totalPrice()}`}</h3>
                 <br/>
-                <Link to='/' className='boton'>Terminar compra</Link>
+                <Link to='/form' className='boton'>Terminar compra</Link>
             </CartContainer>
         </>
     )

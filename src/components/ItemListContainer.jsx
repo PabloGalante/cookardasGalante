@@ -39,7 +39,7 @@ const ItemListContainer = (props) => {
 
     return (
         <>
-            <h2 style={{textAlign: 'center', marginTop: '40px', fontSize: "2rem"}}>{props.greeting}</h2>
+            <h2 style={{textAlign: 'center', marginTop: '40px', fontSize: "2rem"}}>{category ? category.toUpperCase() : 'TODO'}</h2>
             <br/>
             <ItemList items={items}/>
         </>

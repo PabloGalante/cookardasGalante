@@ -6,6 +6,8 @@ import ItemListContainer from './components/ItemListContainer';
 import ItemDetailContainer from './components/ItemDetailContainer';
 import CartProvider from './context/CartContext';
 import Cart from './components/Cart';
+import Form from './components/Form';
+import Contact from './components/Contact';
 
 function App() {
 
@@ -24,6 +26,8 @@ function App() {
               }
             />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/form" element={<Form />} />
+            <Route path="/contact" element={<Contact />} />
           </Routes>
         </BrowserRouter>
       </CartProvider>

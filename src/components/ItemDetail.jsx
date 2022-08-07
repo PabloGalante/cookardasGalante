@@ -119,8 +119,12 @@ const ItemDetailText = styled.p`
 
 const ItemDetail = ({ item }) => {
     const [amount, setAmount] = useState(0);
-    const [itemStock, setItemStock] = useState(item.stock);
     const { addItem, cartItems } = useContext(CartContext);
+    
+    const itemInCart = cartItems.filter((cookie) => cookie.id === item.id);
+    const itemQuantity = itemInCart[0]?.quantity === undefined ? 0 : itemInCart[0].quantity;
+
+    const [itemStock, setItemStock] = useState(item.stock - itemQuantity);
 
     const findItem = cartItems.find(product => product.id === item.id);
 

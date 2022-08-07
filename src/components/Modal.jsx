@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const ModalDiv = styled.div`
@@ -71,25 +72,33 @@ const Overlay = styled.div`
     position: absolute;
 `
 
-const ItemDetail = ({ item, setIsOpen }) => {
+const Modal = ({ message, open }) => {
+    const [isOpen, setIsOpen] = useState(false);
 
-    return (
-        <>
-            <Overlay onClick={() => setIsOpen(false)}></Overlay>
-            <ModalDiv>
-                <ModalHeader>
-                    <ModalTitle>{item.title}</ModalTitle>
-                    <img src={item.pictureUrl} alt={item.title} className="articleImage" />
-                    <CloseButton onClick={() => setIsOpen(false)}>&times;</CloseButton>
-                </ModalHeader>
-                <ModalBody>
-                    <p>{item.description}</p>
-                    <br/>
-                    <p>$: {item.price}</p>
-                </ModalBody>
-            </ModalDiv>
-        </>
-    )
+    setIsOpen(open);
+
+    if(isOpen){
+        return (
+            <>
+                <Overlay onClick={() => isOpen(false)}></Overlay>
+                <ModalDiv>
+                    <ModalHeader>
+                        <ModalTitle>Compra Realizada!</ModalTitle>
+                        <CloseButton onClick={() => isOpen(false)}>&times;</CloseButton>
+                    </ModalHeader>
+                    <ModalBody>
+                        <p>Su pedido fue creado con exito. El numero de compra es: {message}</p>
+                    </ModalBody>
+                </ModalDiv>
+            </>
+        )
+    }
+
+    if(!isOpen){
+        return(
+            <></>
+        )
+    }
 }
 
-export default ItemDetail;
+export default Modal;
