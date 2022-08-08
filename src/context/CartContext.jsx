@@ -4,8 +4,8 @@ import { addDoc, collection, getFirestore, updateDoc, doc } from 'firebase/fires
 export const CartContext = React.createContext();
 
 const CartProvider = ( props ) => {
-
     const [cartItems, setCartItems] = React.useState([]);
+    const [orderId, setOrderId] = React.useState("");
 
     const addItem = (item, quantity) => {
         if(isInCart(item.id)) {
@@ -49,11 +49,12 @@ const CartProvider = ( props ) => {
         };
 
         addDoc(orderCollection, order)
-            .then((res) => alert(`Su compra fue realizada con exito. Su numero de orden es ${res.id}`))
+            .then((res) => {
+                setOrderId(res.id);
+                updateStock(order);
+                clear();
+            })
             .catch((err) => console.log(err));
-        
-        updateStock(order);
-        clear();
     };
 
     const updateStock = (order) => {
@@ -71,7 +72,9 @@ const CartProvider = ( props ) => {
 
     return (
         <CartContext.Provider value={{ 
-                                        cartItems, 
+                                        cartItems,
+                                        orderId,
+                                        setOrderId,
                                         setCartItems,
                                         addItem,
                                         removeItem,

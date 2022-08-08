@@ -8,6 +8,7 @@ import CartProvider from './context/CartContext';
 import Cart from './components/Cart';
 import Form from './components/Form';
 import Contact from './components/Contact';
+import Success from './components/Success';
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/form" element={<Form />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/success" element={<Success />} />
           </Routes>
         </BrowserRouter>
       </CartProvider>

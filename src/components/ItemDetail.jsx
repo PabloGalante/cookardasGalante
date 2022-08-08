@@ -103,6 +103,7 @@ const ItemDetailImg = styled.img`
     width: 300px;
     height: 300px;
     border-radius: 50%;
+    background: transparent;
 `
 
 const ItemDetailTitle = styled.h2`

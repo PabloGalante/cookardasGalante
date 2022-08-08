@@ -52,6 +52,8 @@ const Nav = styled.nav`
 `;
 
 const NavBar = () => {
+    /*    FUNCION DE OCULTAR CARRITO CUANDO NO HAY ITEMS
+    
     const { cartItems } = useContext(CartContext);
 
     useEffect(() => {
@@ -62,7 +64,7 @@ const NavBar = () => {
         }else {
             link.style.display = 'inline-flex';
         }
-    }, [cartItems]);
+    }, [cartItems]); */
 
     return (
         <Nav>
