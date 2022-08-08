@@ -1,9 +1,8 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import logo from '../assets/img/LOGO-REDONDO-HONDO.png';
 import CartWidget from './CartWidget';
 import { Link } from 'react-router-dom';
-import { CartContext } from '../context/CartContext';
 
 const Nav = styled.nav`
 

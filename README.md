@@ -30,9 +30,6 @@ REQUISITOS
 
 - Debe ser un app que utilice React-Router para su navegación
 
-**Extras:**
-- Un botón que copie el texto encriptado/desencriptado para la sección de transferencia, osea que tenga la misma funcionalidad del `ctrl+C` o de la opción "copiar" del menú de las aplicaciones.
-
 DIRECCION WEB DE LA APP
 ========================
-Puedes correr la aplicación yendo al siguiente enlace: https://pablogalante.github.io/EncriptadorTextoJS/
+Puedes correr la aplicación yendo al siguiente enlace: https://cookardasgalante.netlify.app/
