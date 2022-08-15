@@ -62,9 +62,7 @@ const CartProvider = ( props ) => {
 
         order.items.forEach((item) => {
             const orderQuantity = item.quantity;
-            console.log(orderQuantity);
             const itemStock = parseInt(item.stock);
-            console.log(itemStock);
             const docRef = doc(db, "cookies", item.id);
             updateDoc(docRef, {stock: itemStock - orderQuantity});
         });

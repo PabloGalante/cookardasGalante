@@ -30,6 +30,10 @@ REQUISITOS
 
 - Debe ser un app que utilice React-Router para su navegación
 
+EXTRAS
+======
+Este sitio esta estilizado con Styled-Components, una libreria que utiliza estilos clásicos CSS3 y los aplica generando un Componente con esos estilos
+
 DIRECCION WEB DE LA APP
 ========================
 Puedes correr la aplicación yendo al siguiente enlace: https://cookardasgalante.netlify.app/
